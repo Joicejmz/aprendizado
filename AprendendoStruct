@@ -1,0 +1,161 @@
+/*Lista 3 - struct 
+ Para cada um deles iremos escrever um pseudocódigo que resolva o problema descrito, utilizando o recurso de Registros. Em seguida, implementar um programa em C. 
+ 1. Programa do cálculo de médias de alunos: Escrever um programa que cadastre o nome, a matrícula e duas notas de 15 alunos. Em seguida imprima a matrícula, o nome
+ e a média de cada um deles. 
+ Pseudocódigo do programa:  |  QUANTIDADE_DE_ALUNOS = 15                     |  LEIA alunos[i].nota1           | ESCREVA (alunos[i].nota1 + alunos[i].nota2)/2 
+ REGISTRO Aluno             |  DECLARA alunos: Aluno[QUANTIDADE_DE_ALUNOS]   |	LEIA alunos[i].nota2           |   FIM_PARA
+     matricula: NUMÉRICO    |  PARA i=0 ATÉ QUANTIDADE_DE_ALUNOS FAÇA        | FIM_PARA 
+	 nome: TEXTO            |  LEIA alunos[i].nome                          |  PARA i=0 ATÉ QUANTIDADE_DE_ALUNOS FAÇA  
+	 nota1, nota2: NUMÉRICO |  LEIA alunos[i].nome                          |  ESCREVA alunos[i].matricula 
+FIM_REGISTRO                |  LEIA alunos[i].matricula x                   |  	ESCREVA alunos[i].nome 
+ 
+ Se der problema c99: clique em Ferramentas, depois clique em Opções do Compilador , vai abrir uma janelinha, clique na aba Geração de Código,
+aonde diz Padrão da Linguagem (-std) selecione para ISO C99 e clique em Ok, agora seu código vai funcionar, e não vai aparecer mais essa mensagem de erro.*/
+
+
+                                            // siga a ordem : cadastre (1) e depois mostre (2)
+ //feito por Joice :P
+
+
+
+#include<stdio.h>
+#include<locale.h>
+#include<conio.h>
+#include<string.h>
+#include<math.h>
+#include<stdlib.h>
+#include<windows.h>
+#include<unistd.h>
+void gotoxy(int x, int y); // declaro funções que chamarei dentro do int main; elas estão abaixo da função principal
+void tela();
+
+ typedef struct {
+        char nome[25];
+        int matricula;
+        float nota1, nota2;
+} aluno;
+#define quantidade_de_alunos 3
+
+ int main(){
+ setlocale(LC_ALL,"Portuguese");
+ 
+ char opcao;
+ opcao='0';
+ aluno alunos[quantidade_de_alunos];// parece coisa de estanciar objeto do java... estou confundindo? FAVOR ME CORRIGIR!!!!
+ int i;
+
+ 
+	
+ while(opcao!='3'){// aqui começa a lógica, seguindo um esquema dfe menu
+ 	system("cls");
+ 	system("color 5F"); 
+	tela();	
+ 		gotoxy(20,10);
+ 		printf("Opções do MENU:");
+	 	gotoxy(20,11);
+	 	printf("1- :::Cadastro:::");
+ 		gotoxy(20,12);
+ 		printf("2- :::mostra alunos:::");
+ 		gotoxy(20,13);
+ 		printf("3- :::sair:::");
+		 
+		 fflush(stdin);
+		 gotoxy(20,14);
+		 printf("<<DIGITE A OPÇÃO>> : ");
+		 gotoxy(51,14);
+		 scanf("%c", &opcao);
+ 			
+			 switch(opcao){
+ 			 	case '1': //só cadastra
+ 					system("pause");
+					 system("cls");
+					 system("color 8F");
+					 tela();
+					 gotoxy(20,12);
+					 printf("Insira os dados dos alunos");
+        				
+						for(int i=0; i < quantidade_de_alunos; i++){
+		                printf("\n\t %d º aluno: ",i+1);
+		                printf("\t Nome: ");
+		                scanf("%s",&alunos[i].nome);
+		                fflush(stdin);
+		                printf("\t Matrícula: ");
+		                scanf("%d",&alunos[i].matricula);
+		                fflush(stdin);
+		                printf("\t Nota 1:  ");
+		                scanf("%f",&alunos[i].nota1);
+		                fflush(stdin);
+						printf("\t Nota 2:  ");
+		                scanf("%f",&alunos[i].nota2);  
+						fflush(stdin);      
+			     }
+				break;
+	 
+	 			case'2':// calcula e média e mostra os dados dos alnos já cadastrados
+	 				system("pause");
+					system("cls");
+					system("color 10");
+					tela();
+					gotoxy(20,12);
+					printf("Matrícula, nome e média do aluno: ");
+					
+					  for(int i=0; i < quantidade_de_alunos; i++){
+					  printf("\n \t %d \t   %s    \t   %1.2f\n",alunos[i].matricula, alunos[i].nome, (alunos[i].nota1 + alunos[i].nota2)/2 );
+					  }
+					system("pause");
+					system("cls");
+	 			break;
+	 
+				case'3': //saindo com estilo ;)
+	 				system("pause");
+				    system("cls");
+					system("color F0");
+					tela();
+					gotoxy(20,12);
+	 				printf("Você está saindo do programa");
+       			break;
+       
+				default:// caso o usuário aperte outra coisa fora das opções do menu, vai pra cá
+					
+					system("cls");
+					system("color C1");
+					tela();
+					gotoxy(20,12);
+		 			printf("Opção inválida\n\n\n"); 
+		 			system("pause");
+					system("cls");
+				break;
+ } //fecha o switch
+ }//fecha o wlihe
+getchar();
+}
+//Função de posicionamento
+void gotoxy(int x, int y){
+	COORD c;
+	c.X = x - 1;
+	c.Y = y - 1;
+	SetConsoleCursorPosition (GetStdHandle(STD_OUTPUT_HANDLE), c);
+}
+
+//Função desenha moldura de tela
+void tela(){
+	int	c,l;
+	
+	
+	
+	//Desenha as linhas horizontais
+	for(c=1; c<=100; c++){
+	    gotoxy(c,1); printf("=-=");
+	    gotoxy(c,5); printf("=-=");
+	    gotoxy(c,100); printf("=-=");
+		Sleep(4);
+	}
+    // Desenha as linhas verticais
+	for( l=1;l<=100;l++){
+	    gotoxy(1,l); printf("|:|");
+	    gotoxy(100,l); printf("|:|");
+	    Sleep(5);
+	}
+    gotoxy(35,3);
+    printf("Exercício 1 (único) - lista 3");
+}
